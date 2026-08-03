@@ -8,6 +8,10 @@ TODO and FIXME keyword highlighting.
 - **Syntax highlighting**: highlights `TODO`, `FIXME`, `CHANGED`, `XXX`, `IDEA`, `HACK`, `NOTE`, `REVIEW`, `NB`, `BUG`, `QUESTION`, `COMBAK`, `TEMP`, `DEBUG`, `OPTIMIZE`, and `WARNING` markers in comments and text.
 - **Snippets**: shortcuts for common TODO-style markers.
 
+## Installation
+
+To install `language-todo` search for _language-todo_ in the Install pane of the Lumine settings or run `lumine --install lumine-code/language-todo`.
+
 ## Services
 
 - **[todo.injection](docs/todo.injection.md)** (`1.0.0`): provided to highlight `TODO`-style markers inside other languages' comments.
