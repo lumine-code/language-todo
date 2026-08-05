@@ -3,6 +3,13 @@
   "author": "lumine-code",
   "version": "1.0.0",
   "main": "lib/main",
+  "files": [
+    "docs",
+    "grammars",
+    "lib",
+    "snippets",
+    "spec"
+  ],
   "description": "TODO and FIXME keyword highlighting.",
   "keywords": [
     "fixme",
