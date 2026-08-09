@@ -2,9 +2,9 @@ describe("TODO grammar", () => {
   let grammar = null;
 
   beforeEach(() => {
-    waitsForPromise(() => atom.packages.activatePackage("language-todo"));
+    waitsForPromise(() => lumine.packages.activatePackage("language-todo"));
 
-    runs(() => (grammar = atom.grammars.grammarForScopeName("text.todo")));
+    runs(() => (grammar = lumine.grammars.grammarForScopeName("text.todo")));
   });
 
   it("parses the grammar", () => {
@@ -13,7 +13,7 @@ describe("TODO grammar", () => {
   });
 
   it("recognizes TODO markers only at word boundaries", async () => {
-    const editor = await atom.workspace.open("sample.todo");
+    const editor = await lumine.workspace.open("sample.todo");
     editor.setText("TODO: fix this");
     editor.setGrammar(grammar);
 

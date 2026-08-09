@@ -11,9 +11,9 @@ describe("TODO sample fixture", () => {
   let editor = null;
 
   beforeEach(async () => {
-    await atom.packages.activatePackage("language-text");
-    await atom.packages.activatePackage("language-todo");
-    editor = await atom.workspace.open(path.join(__dirname, "fixtures", "sample.txt"));
+    await lumine.packages.activatePackage("language-text");
+    await lumine.packages.activatePackage("language-todo");
+    editor = await lumine.workspace.open(path.join(__dirname, "fixtures", "sample.txt"));
   });
 
   function rowOf(text) {
