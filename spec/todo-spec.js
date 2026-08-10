@@ -1,10 +1,10 @@
 describe("TODO grammar", () => {
   let grammar = null;
 
-  beforeEach(() => {
-    waitsForPromise(() => lumine.packages.activatePackage("language-todo"));
+  beforeEach(async () => {
+    await lumine.packages.activatePackage("language-todo");
 
-    runs(() => (grammar = lumine.grammars.grammarForScopeName("text.todo")));
+    grammar = lumine.grammars.grammarForScopeName("text.todo");
   });
 
   it("parses the grammar", () => {
