@@ -10,11 +10,11 @@ TODO and FIXME keyword highlighting.
 
 ## Installation
 
-To install `language-todo` search for _language-todo_ in the Install pane of the Lumine settings or run `lumine --install lumine-code/language-todo`.
+To install `language-todo` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/language-todo`.
 
 ## Services
 
-- **[todo.injection](docs/todo.injection.md)** (`1.0.0`): provided to highlight `TODO`-style markers inside other languages' comments.
+- [`todo.injection`](docs/todo.injection.md): provided to highlight `TODO`-style markers inside other languages' comments.
 
 ## Contributing
 
