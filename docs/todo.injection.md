@@ -9,7 +9,7 @@ Lets a language grammar highlight `TODO`-style markers inside its own comments, 
 | Consumed by | `consumeTodoInjection(todo)`                            |
 | Owner       | `language-todo` (bundled)                               |
 
-Consumed by eighteen language packages. The shape is identical to `hyperlink.injection`; a grammar package usually consumes both in the same file.
+Consumed by language packages across the workspace. The shape is identical to `hyperlink.injection`; a grammar package usually consumes both in the same file.
 
 The markers recognised are `TODO`, `FIXME`, `CHANGED`, `XXX`, `IDEA`, `HACK`, `NOTE`, `REVIEW`, `NB`, `BUG`, `QUESTION`, `COMBAK`, `TEMP`, `DEBUG`, `OPTIMIZE`, and `WARNING`.
 
@@ -27,7 +27,7 @@ In your `package.json`:
 }
 ```
 
-Tree-sitter grammars only — injection points are a Tree-sitter concept, so a TextMate-only package has nothing to consume.
+The service registers Tree-sitter injection points on the exact parent grammar scopes supplied by the consumer.
 
 ## Contract
 

@@ -4,7 +4,7 @@ TODO and FIXME keyword highlighting.
 
 ## Features
 
-- **Grammars**: provides Tree-sitter grammars built from [tree-sitter-todo](https://github.com/lumine-code/tree-sitter-todo) and TextMate grammars maintained here.
+- **Grammars**: provides a Tree-sitter grammar built from [tree-sitter-todo](https://github.com/lumine-code/tree-sitter-todo).
 - **Syntax highlighting**: highlights `TODO`, `FIXME`, `CHANGED`, `XXX`, `IDEA`, `HACK`, `NOTE`, `REVIEW`, `NB`, `BUG`, `QUESTION`, `COMBAK`, `TEMP`, `DEBUG`, `OPTIMIZE`, and `WARNING` markers in comments and text.
 - **Snippets**: shortcuts for common TODO-style markers.
 
