@@ -1,0 +1,32 @@
+The TODO grammar has no files of its own: it is injected into comments and
+plain text, so this sample uses the plain-text grammar as its host.
+
+TODO: the marker itself is what gets scoped, not the line.
+FIXME: a second marker, on its own line.
+@TODO an at-sign in front is allowed.
+
+Every recognised marker, one per line:
+
+TODO
+FIXME
+CHANGED
+XXX
+IDEA
+HACK
+NOTE
+REVIEW
+NB
+BUG
+QUESTION
+COMBAK
+TEMP
+DEBUG
+OPTIMIZE
+WARNING
+
+Markers only match at a word boundary, so none of these is one:
+
+xTODO
+TODOs
+NOTEBOOK
+subTODO
