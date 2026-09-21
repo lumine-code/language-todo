@@ -40,7 +40,7 @@ type TodoInjection = {
       language?(node: Node): string | null | undefined;
       content?(node: Node): Node | Node[];
     },
-  ): void;
+  ): Disposable;
 
   test(node: Node): boolean;
 };
@@ -48,7 +48,7 @@ type TodoInjection = {
 
 | Member                                  | Description                                                                                                        |
 | --------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `addInjectionPoint(scopeName, options)` | Registers an injection point on a grammar. `scopeName` is the parent language's scope.                             |
+| `addInjectionPoint(scopeName, options)` | Registers an injection point on a grammar and returns its cleanup. `scopeName` is the parent language's scope.     |
 | `options.types`                         | Required. One node type or an array of them — the nodes that may contain a marker.                                 |
 | `options.language(node)`                | Optional. Return a language name to force one, `null` to suppress, or `undefined` to fall through.                 |
 | `options.content(node)`                 | Optional. Narrows the injection to some of the node's children. Defaults to the node itself.                       |
@@ -60,9 +60,14 @@ type TodoInjection = {
 const SCOPES = ["source.mylang", "source.mylang.embedded"];
 
 exports.consumeTodoInjection = (todo) => {
-  for (const scope of SCOPES) {
-    todo.addInjectionPoint(scope, { types: ["comment"] });
-  }
+  const registrations = SCOPES.map((scope) =>
+    todo.addInjectionPoint(scope, { types: ["comment"] }),
+  );
+  return {
+    dispose() {
+      for (const registration of registrations.splice(0)) registration.dispose();
+    },
+  };
 };
 ```
 
@@ -78,7 +83,7 @@ Register each scope your package ships separately. The table is keyed by exact s
 
 ## Teardown
 
-`addInjectionPoint` returns nothing and injection points cannot be removed, so the registration lasts for the life of the window. Register at activation and unconditionally.
+`addInjectionPoint` returns a `Disposable` that removes every injection point created for `options.types`. A consumer must return that disposable from its service callback; when it registers several scopes, it returns one aggregate disposable that owns them all. This lets provider disable, consumer disable and package reactivation remove the old generation before reconnecting the edge.
 
 ## Versioning
 
