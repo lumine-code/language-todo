@@ -19,10 +19,19 @@ describe("TODO grammar", () => {
 
     const languageMode = editor.getBuffer().languageMode;
     await languageMode.ready;
-    expect(languageMode.tree.rootNode.toString()).toBe("(program (todo (todo_token) (todo_body)))");
+    let root = editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => node.parent == null);
+    expect(root.type).toBe("program");
+    expect(root.namedChildren.map((node) => node.type)).toEqual(["todo"]);
+    expect(root.namedChild(0).namedChildren.map((node) => node.type)).toEqual([
+      "todo_token",
+      "todo_body",
+    ]);
+    expect((await editor.getSyntaxDiagnostics()).hasError).toBe(false);
 
     editor.setText("xTODO");
     await languageMode.atTransactionEnd();
-    expect(languageMode.tree.rootNode.toString()).toBe("(program)");
+    root = editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => node.parent == null);
+    expect(root.type).toBe("program");
+    expect(root.namedChildren).toEqual([]);
   });
 });
