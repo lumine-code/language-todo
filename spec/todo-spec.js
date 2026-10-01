@@ -26,7 +26,7 @@ describe("TODO grammar", () => {
       "todo_token",
       "todo_body",
     ]);
-    expect((await editor.getSyntaxDiagnostics()).hasError).toBe(false);
+    expect(root.hasError).toBe(false);
 
     editor.setText("xTODO");
     await languageMode.atTransactionEnd();

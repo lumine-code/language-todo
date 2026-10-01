@@ -9,13 +9,24 @@ Lets a language grammar highlight `TODO`-style markers inside its own comments, 
 | Consumed by | `consumeTodoInjection(todo)`                            |
 | Owner       | `language-todo` (bundled)                               |
 
-Consumed by language packages across the workspace. The shape is identical to `hyperlink.injection`; a grammar package usually consumes both in the same file.
+Prefer a static injection query when the syntax tree identifies the comment nodes. This service remains available when eligibility or content needs runtime logic. Its shape is identical to `hyperlink.injection`.
 
 The markers recognised are `TODO`, `FIXME`, `CHANGED`, `XXX`, `IDEA`, `HACK`, `NOTE`, `REVIEW`, `NB`, `BUG`, `QUESTION`, `COMBAK`, `TEMP`, `DEBUG`, `OPTIMIZE`, and `WARNING`.
 
 ## Registration
 
-In your `package.json`:
+For static rules, declare `treeSitter.injectionsQuery` in the parent grammar descriptor and put this pattern in the referenced SCM file:
+
+```scheme
+((comment) @injection.owner @injection.content
+  (#set! injection.language "todo")
+  (#set! injection.include-children)
+  (#set! injection.language-scope "none"))
+```
+
+Replace `comment` with the actual comment node types in the parent parser. The target grammar declares `injectionContentRegex`, which filters owners without annotation markers before a child layer is created. The marker list belongs to this package, so a consumer never repeats it. No consumed service or JavaScript entry point is needed. The editor adds injections when the target grammar becomes available and removes them when it is disabled.
+
+For the JavaScript service, declare this in your `package.json`:
 
 ```json
 {
@@ -75,9 +86,9 @@ exports.consumeTodoInjection = (todo) => {
 
 Register `comment` node types only. Unlike hyperlinks, markers are meaningful in comments and noise everywhere else — injecting into strings will highlight the word `NOTE` in ordinary prose.
 
-The injection fires only for nodes whose text actually contains one of the markers, which is what keeps the cost proportional to the comments rather than to the file.
+The injection fires only for nodes whose text contains one of the markers. Static rules and the service's default test use the same `injectionContentRegex` from the target grammar descriptor. The target prefilter is applied only to static rules, so a JavaScript callback can still deliberately override the default test.
 
-Injection is **per comment node**, not per document. That is a deliberate performance compromise rather than the ideal design, so a package with unusually many small comments may see the cost add up; it is not something a consumer can tune.
+The service creates one injection per eligible comment node. Static rules preserve that boundary by default; use `injection.combined` only when joining owners preserves the target parser's meaning and error recovery.
 
 Register each scope your package ships separately. The table is keyed by exact scope name, so a dialect needs its own call.
 
