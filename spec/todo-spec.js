@@ -34,4 +34,44 @@ describe("TODO grammar", () => {
     expect(root.type).toBe("program");
     expect(root.namedChildren).toEqual([]);
   });
+
+  it("rejects marker suffixes and updates the capture when a word boundary changes", async () => {
+    const editor = await lumine.workspace.open();
+    editor.setGrammar(grammar);
+    editor.setText(
+      "TODO valid\nFoTODO invalid\nTODO1TODO invalid\nTODO_TODO invalid\nFIXME2BUG invalid",
+    );
+    const languageMode = editor.getBuffer().languageMode;
+    await languageMode.ready;
+    let root = editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => node.parent == null);
+    expect(root.hasError).toBe(false);
+    expect(root.namedChildren.map((node) => node.text)).toEqual(["TODO valid"]);
+    expect(editor.scopeDescriptorForBufferPosition([1, 2]).getScopesArray()).not.toContain(
+      "storage.type.class.todo",
+    );
+
+    editor.getBuffer().setTextInRange(
+      [
+        [1, 0],
+        [1, 2],
+      ],
+      "  ",
+    );
+    await languageMode.atTransactionEnd();
+    root = editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => node.parent == null);
+    expect(root.namedChildren.map((node) => node.text)).toEqual(["TODO valid", "TODO invalid"]);
+    expect(editor.scopeDescriptorForBufferPosition([1, 2]).getScopesArray()).toContain(
+      "storage.type.class.todo",
+    );
+  });
+
+  it("keeps NUL characters inside a TODO body without parse errors", async () => {
+    const editor = await lumine.workspace.open();
+    editor.setGrammar(grammar);
+    editor.setText("TODO a\0b\r\nFIXME\r\n");
+    await editor.getBuffer().languageMode.ready;
+    const root = editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => node.parent == null);
+    expect(root.hasError).toBe(false);
+    expect(root.namedChildren.map((node) => node.text)).toEqual(["TODO a\0b", "FIXME"]);
+  });
 });
