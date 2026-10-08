@@ -2,6 +2,8 @@
 
 TODO and FIXME keyword highlighting.
 
+Fork of [pulsar-edit/pulsar](https://github.com/pulsar-edit/pulsar) (`packages/language-todo`).
+
 ## Features
 
 - **Grammars**: provides a Tree-sitter grammar built from [tree-sitter-todo](https://github.com/lumine-code/tree-sitter-todo).
