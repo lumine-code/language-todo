@@ -1,5 +1,5 @@
-The TODO grammar has no files of its own: it is injected into comments and
-plain text, so this sample uses the plain-text grammar as its host.
+The TODO grammar has no files of its own: it is injected into comments.
+This sample assigns the TODO grammar directly to cover every marker.
 
 TODO: the marker itself is what gets scoped, not the line.
 FIXME: a second marker, on its own line.
