@@ -11,6 +11,8 @@ Fork of [pulsar-edit/pulsar](https://github.com/pulsar-edit/pulsar) (`packages/l
 - **Snippets**: shortcuts for common TODO-style markers.
 - **Static injections**: accepts the `todo` alias in injection queries and filters out owners without annotation markers.
 
+![Highlight task annotations inside source comments.](.github/demo.png)
+
 ## Installation
 
 To install `language-todo` search for it in the Install pane of the Lumine settings, or run the command `lumine --install lumine-code/language-todo`.

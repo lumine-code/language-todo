@@ -1,0 +1,16 @@
+{
+  "title": "language-todo",
+  "description": "Highlight task annotations inside source comments.",
+  "recordedOn": "2026-10-13",
+  "sourceRevision": "188d76b59dcd00b22a75d2fa210fec24f4c99f5b",
+  "mode": "normal",
+  "fontSettings": "default",
+  "images": [
+    {
+      "file": "demo.png",
+      "label": "Highlight task annotations inside source comments.",
+      "width": 1100,
+      "height": 340
+    }
+  ]
+}
