@@ -1,16 +1,66 @@
 {
   "title": "language-todo",
   "description": "Highlight task annotations inside source comments.",
-  "recordedOn": "2026-10-13",
-  "sourceRevision": "188d76b59dcd00b22a75d2fa210fec24f4c99f5b",
+  "recordedOn": "2026-10-14",
+  "sourceRevision": "b1ac621c2aad331a5185dc15a7a7d740d13250bb",
+  "themeSourceRevision": "7fbd047a87ecf1367c896b19ff270cdc28d319f7",
   "mode": "normal",
   "fontSettings": "default",
+  "scenario": "demo.js",
+  "recipeHash": "b65009d663ccdc60ce05fbe09b906e2d200b1e6b933e11b37cada0cc19077be4",
+  "environment": {
+    "platform": "win32",
+    "arch": "x64",
+    "electron": "44.7.0",
+    "chrome": "152.0.7977.130",
+    "devicePixelRatio": 1,
+    "locale": "en-GB",
+    "fontFamily": "Fira Code, Menlo, DejaVu Sans Mono, Consolas, monospace",
+    "fontSize": 14,
+    "themes": ["one-day-syntax", "one-day-ui"]
+  },
+  "viewport": { "width": 1100, "height": 340 },
+  "cornerRadius": 10,
+  "sources": {
+    "editor": {
+      "revision": "d0b1751fffac65f10a405545e5f01cf7ad05c0bb",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "package": {
+      "revision": "b1ac621c2aad331a5185dc15a7a7d740d13250bb",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "language-todo": {
+      "revision": "b1ac621c2aad331a5185dc15a7a7d740d13250bb",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "language-javascript": {
+      "revision": "ae2e6968e3a349fb4d09ce53e339a0f8cce903aa",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    },
+    "one-theme": {
+      "revision": "7fbd047a87ecf1367c896b19ff270cdc28d319f7",
+      "dirty": false,
+      "workingTreeHash": "4f53cda18c2baa0c0354bb5f9a3ecbe5ed12ab4d8e11ba873c2f11161202b945"
+    }
+  },
+  "fixtures": [
+    {
+      "file": "usage/signal.js",
+      "sha256": "147a6ac0bfd1caa8fe3459073e1ac249b7afd96ed213a3830e8c7fbbf72dbf4e"
+    }
+  ],
   "images": [
     {
       "file": "demo.png",
       "label": "Highlight task annotations inside source comments.",
       "width": 1100,
-      "height": 340
+      "height": 340,
+      "sha256": "3c8d6c35f15462af311f4b9c3b2e41bd61130763daa9c3c0c58821805be0ef40"
     }
   ]
 }
