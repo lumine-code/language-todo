@@ -24,7 +24,7 @@ describe("TODO injection service", () => {
     expect(registrations[1].dispose).toHaveBeenCalled();
   });
 
-  it("preserves bounded annotation eligibility and explicit JavaScript overrides", () => {
+  it("preserves bounded annotation eligibility and declarative overrides", () => {
     const points = [];
     spyOn(lumine.grammars, "addInjectionPoint").and.callFake((_scope, point) => {
       points.push(point);
@@ -35,15 +35,15 @@ describe("TODO injection service", () => {
       .mainModule.provideTodoInjection();
     const ordinary = { text: "an ordinary comment" };
     for (const text of ["TODO: finish", "NOTE: example", "WARNING: check"]) {
-      expect(service.test({ text })).toBe(true);
-      expect(service.test({ text })).toBe(true);
+      expect(service.testText(text)).toBe(true);
+      expect(service.testText(text)).toBe(true);
     }
     for (const text of [ordinary.text, "todo: lowercase", "TODOS are prose", "NOTED"])
-      expect(service.test({ text })).toBe(false);
+      expect(service.testText(text)).toBe(false);
 
     service.addInjectionPoint("source.test", { types: "comment" });
-    service.addInjectionPoint("source.test", { types: "comment", language: () => "todo" });
-    service.addInjectionPoint("source.test", { types: "comment", language: () => null });
+    service.addInjectionPoint("source.test", { types: "comment", language: "todo" });
+    service.addInjectionPoint("source.test", { types: "comment", language: null });
     expect(points[0].language(ordinary)).toBeUndefined();
     expect(points[1].language(ordinary)).toBe("todo");
     expect(points[2].language({ text: "TODO" })).toBeNull();

@@ -4,7 +4,7 @@ Lets a language grammar highlight `TODO`-style markers inside its own comments, 
 
 |             |                                                         |
 | ----------- | ------------------------------------------------------- |
-| Version     | `1.0.0`                                                 |
+| Version     | `2.0.0`                                                 |
 | Provided by | `provideTodoInjection()` returning the injection helper |
 | Consumed by | `consumeTodoInjection(todo)`                            |
 | Owner       | `language-todo` (bundled)                               |
@@ -32,7 +32,7 @@ For the JavaScript service, declare this in your `package.json`:
 {
   "consumedServices": {
     "todo.injection": {
-      "versions": { "^1.0.0": "consumeTodoInjection" }
+      "versions": { "^2.0.0": "consumeTodoInjection" }
     }
   }
 }
@@ -48,22 +48,22 @@ type TodoInjection = {
     scopeName: string,
     options: {
       types: string | string[];
-      language?(node: Node): string | null | undefined;
-      content?(node: Node): Node | Node[];
+      language?: string | null;
+      contentField?: string;
     },
   ): Disposable;
 
-  test(node: Node): boolean;
+  testText(text: string): boolean;
+  modulePath: string;
 };
 ```
 
-| Member                                  | Description                                                                                                        |
-| --------------------------------------- | ------------------------------------------------------------------------------------------------------------------ |
-| `addInjectionPoint(scopeName, options)` | Registers an injection point on a grammar and returns its cleanup. `scopeName` is the parent language's scope.     |
-| `options.types`                         | Required. One node type or an array of them — the nodes that may contain a marker.                                 |
-| `options.language(node)`                | Optional. Return a language name to force one, `null` to suppress, or `undefined` to fall through.                 |
-| `options.content(node)`                 | Optional. Narrows the injection to some of the node's children. Defaults to the node itself.                       |
-| `test(node)`                            | The default check — whether the node's text contains one of the markers. Exposed for a custom `language` callback. |
+| Member                                  | Description                                                                                                    |
+| --------------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `addInjectionPoint(scopeName, options)` | Registers an injection point on a grammar and returns its cleanup. `scopeName` is the parent language's scope. |
+| `options.types`                         | Required. One node type or an array of them — the nodes that may contain a marker.                             |
+
+The service registers a syntax module in each parser owner. Options must be serializable: `language` forces a constant language name or suppresses the injection with `null`, and `contentField` selects a named child field. For custom callbacks, register your own module with `lumine.grammars.registerSyntaxModule`, pass `modulePath` as a factory argument, and call `require(modulePath).test(node)` inside that module. Syntax nodes stay with their parser. `testText(text)` exposes the same eligibility check for ordinary strings.
 
 ## Minimal example
 
@@ -98,4 +98,4 @@ Register each scope your package ships separately. The table is keyed by exact s
 
 ## Versioning
 
-`1.0.0` provided, `^1.0.0` consumed. A change that breaks this shape gets a new service name rather than a new major version, and both sides move in the same release.
+`2.0.0` provided, `^2.0.0` consumed. Version 2 replaces renderer-owned node callbacks with serializable options and parser-owned syntax modules. Consumers must use `^2.0.0`; custom node callbacks belong in their syntax module.

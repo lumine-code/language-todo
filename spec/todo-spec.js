@@ -1,3 +1,8 @@
+const inspect = async (editor) => {
+  const result = await editor.analyzeSyntax(require.resolve("./helpers/syntax-tree"), "inspect");
+  await editor.getBuffer().getLanguageMode().refresh?.();
+  return result;
+};
 describe("TODO grammar", () => {
   let grammar = null;
 
@@ -19,10 +24,10 @@ describe("TODO grammar", () => {
 
     const languageMode = editor.getBuffer().languageMode;
     await languageMode.ready;
-    let root = editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => node.parent == null);
+    let root = await inspect(editor);
     expect(root.type).toBe("program");
     expect(root.namedChildren.map((node) => node.type)).toEqual(["todo"]);
-    expect(root.namedChild(0).namedChildren.map((node) => node.type)).toEqual([
+    expect(root.namedChildren[0].namedChildren.map((node) => node.type)).toEqual([
       "todo_token",
       "todo_body",
     ]);
@@ -30,7 +35,7 @@ describe("TODO grammar", () => {
 
     editor.setText("xTODO");
     await languageMode.atTransactionEnd();
-    root = editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => node.parent == null);
+    root = await inspect(editor);
     expect(root.type).toBe("program");
     expect(root.namedChildren).toEqual([]);
   });
@@ -43,7 +48,7 @@ describe("TODO grammar", () => {
     );
     const languageMode = editor.getBuffer().languageMode;
     await languageMode.ready;
-    let root = editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => node.parent == null);
+    let root = await inspect(editor);
     expect(root.hasError).toBe(false);
     expect(root.namedChildren.map((node) => node.text)).toEqual(["TODO valid"]);
     expect(editor.scopeDescriptorForBufferPosition([1, 2]).getScopesArray()).not.toContain(
@@ -58,7 +63,7 @@ describe("TODO grammar", () => {
       "  ",
     );
     await languageMode.atTransactionEnd();
-    root = editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => node.parent == null);
+    root = await inspect(editor);
     expect(root.namedChildren.map((node) => node.text)).toEqual(["TODO valid", "TODO invalid"]);
     expect(editor.scopeDescriptorForBufferPosition([1, 2]).getScopesArray()).toContain(
       "storage.type.class.todo",
@@ -70,7 +75,7 @@ describe("TODO grammar", () => {
     editor.setGrammar(grammar);
     editor.setText("TODO a\0b\r\nFIXME\r\n");
     await editor.getBuffer().languageMode.ready;
-    const root = editor.getSyntaxNodeAtBufferPosition([0, 0], (node) => node.parent == null);
+    const root = await inspect(editor);
     expect(root.hasError).toBe(false);
     expect(root.namedChildren.map((node) => node.text)).toEqual(["TODO a\0b", "FIXME"]);
   });

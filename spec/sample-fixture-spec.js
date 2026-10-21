@@ -13,6 +13,7 @@ describe("TODO sample fixture", () => {
     editor.setGrammar(lumine.grammars.grammarForScopeName("text.todo"));
     await editor.getBuffer().getLanguageMode().ready;
     await editor.getBuffer().getLanguageMode().atTransactionEnd();
+    await editor.getBuffer().getLanguageMode().refresh?.();
   });
 
   function scopesAtStartOf(text) {
