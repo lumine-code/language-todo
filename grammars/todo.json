@@ -6,7 +6,7 @@
   "injectionContentRegex": "\\b(TODO|FIXME|CHANGED|XXX|IDEA|HACK|NOTE|REVIEW|NB|BUG|QUESTION|COMBAK|TEMP|DEBUG|OPTIMIZE|WARNING)\\b",
   "treeSitter": {
     "parserSource": "github:lumine-code/tree-sitter-todo#a5e6d3bf73235886760628861eab152272bff2d6",
-    "wasmBuildTool": "tree-sitter-cli#v0.27.0",
+    "wasmBuildTool": "tree-sitter-cli#v0.27.1",
     "grammar": "todo.wasm",
     "highlightsQuery": "todo-highlights.scm"
   }
